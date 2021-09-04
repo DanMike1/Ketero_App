@@ -7,6 +7,7 @@ import 'package:ketero_app/screens/user_page.dart';
 
 import 'package:ketero_app/screens/login.dart';
 import 'package:ketero_app/screens/user_profile.dart';
+import 'package:ketero_app/widget/navigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,13 +19,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [BlocProvider(create: (ctx) => AuthBloc())],
       child: MaterialApp(
-        initialRoute: LoginScreen.routename,
+        initialRoute: navBar.routeName,
         routes: {
+          '/navBar': (context) => navBar(),
           '/userprofile': (context) => UserProfile(),
           '/user': (context) => UserPage(),
           '/login': (context) => LoginScreen(),
-          '/home': (context) => MyHomePage(),
-          'splash': (context) => splashScreen(),
+          '/homepage': (context) => MyHomePage(),
+          '/splash': (context) => splashScreen(),
         },
         theme: ThemeData(
           primarySwatch: Colors.amber,

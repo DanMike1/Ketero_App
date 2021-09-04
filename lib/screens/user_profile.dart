@@ -11,39 +11,6 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            "KETERO",
-            style: TextStyle(color: Colors.amber),
-          ),
-        ),
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () => {},
-          icon: Icon(
-            Icons.arrow_back_outlined,
-            color: Colors.amber,
-          ),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () => {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        duration: Duration(milliseconds: 350),
-                        child: calendarPage(),
-                      ),
-                    )
-                  },
-              icon: Icon(
-                Icons.calendar_today,
-                color: Colors.amber,
-              ))
-        ],
-      ),
       body: Container(
         width: double.infinity,
         // color: Colors.amber,
@@ -93,13 +60,13 @@ class UserProfile extends StatelessWidget {
                         children: [
                           Text(
                             "Username",
-                            style: TextStyle(fontSize: 25),
+                            style: TextStyle(fontSize: 20),
                           ),
                           SizedBox(height: 7),
                           Text(
                             "Dan Mekonnen",
                             style: TextStyle(
-                                fontSize: 20, color: Colors.amberAccent),
+                                fontSize: 15, color: Colors.amberAccent),
                           )
                         ],
                       ),
@@ -110,13 +77,13 @@ class UserProfile extends StatelessWidget {
                         children: [
                           Text(
                             "First Name",
-                            style: TextStyle(fontSize: 25),
+                            style: TextStyle(fontSize: 20),
                           ),
                           SizedBox(height: 7),
                           Text(
                             "Dan Mekonnen",
                             style: TextStyle(
-                                fontSize: 20, color: Colors.amberAccent),
+                                fontSize: 15, color: Colors.amberAccent),
                           )
                         ],
                       ),
@@ -127,13 +94,13 @@ class UserProfile extends StatelessWidget {
                         children: [
                           Text(
                             "Last Name",
-                            style: TextStyle(fontSize: 25),
+                            style: TextStyle(fontSize: 20),
                           ),
                           SizedBox(height: 7),
                           Text(
                             "Dan Mekonnen",
                             style: TextStyle(
-                                fontSize: 20, color: Colors.amberAccent),
+                                fontSize: 15, color: Colors.amberAccent),
                           )
                         ],
                       ),

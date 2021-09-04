@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ketero_app/screens/calendar.dart';
 import 'package:ketero_app/screens/user_profile.dart';
+import 'package:ketero_app/widget/navigation.dart';
 import 'package:ketero_app/widget/profile_pic.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -92,7 +93,7 @@ class UserPage extends StatelessWidget {
                               PageTransition(
                                 type: PageTransitionType.topToBottom,
                                 duration: Duration(milliseconds: 350),
-                                child: UserProfile(),
+                                child: navBar(),
                               ),
                             )
                           },
@@ -112,7 +113,7 @@ class UserPage extends StatelessWidget {
                         PageTransition(
                           type: PageTransitionType.rightToLeft,
                           duration: Duration(milliseconds: 350),
-                          child: UserProfile(),
+                          child: navBar(),
                         ),
                       );
                     },
