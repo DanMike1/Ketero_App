@@ -1,15 +1,25 @@
-# ketero_app
+# Ketero
+Built By : Sintayeh Sermessa ATR/8798/11, Dan Mekonnen ATR/8274/11.
 
-A new Flutter project.
+## Buisness Features
+It has 3 business features.
 
-## Getting Started
+User CRUD
+1. Appointments.
+2. Calendar.
+3. Notifications.
+Ketero aka the application is built using Flutter for the front-end Development also flutter_bloc for state management and NodeJS for the back-end (API).
 
-This project is a starting point for a Flutter application.
+## How to use the app
+To use the app, you must first run the node environment on your local machine and the code for the flutter application is so that it would run on the android emulator on the local machine.
 
-A few resources to get you started if this is your first Flutter project:
+To use the app, you must first run the node environment on your local machine and the code Flutter app so that it can run on the Android emulator on the local machine.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+
+This project is a simple appointments app to track your appointments and organise your life. You can add & delete appointments and manage them also, making your day easier to rememeber and even more easy to organise.
+
+you have a working calendar to help you know when your appointments are due and to simply see the date. Making it easier for you to track how your doing your work or not. If you want to change your username or/and password that is also Possible.
 
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
