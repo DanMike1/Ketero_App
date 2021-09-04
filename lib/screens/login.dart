@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
                       Text(
                         "Have A",
                         style: TextStyle(
-                          fontSize: 70,
+                          fontSize: 50,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

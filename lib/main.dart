@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: LoginScreen.routename,
         routes: {
+          '/user': (context) => UserPage(),
           '/login': (context) => LoginScreen(),
           '/home': (context) => MyHomePage(),
-          '/user': (context) => UserPage(),
         },
         theme: ThemeData(
           primarySwatch: Colors.blue,
