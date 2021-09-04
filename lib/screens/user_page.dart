@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ketero_app/screens/calendar.dart';
+import 'package:ketero_app/screens/user_profile.dart';
+import 'package:ketero_app/widget/profile_pic.dart';
+import 'package:page_transition/page_transition.dart';
 
 class UserPage extends StatelessWidget {
   static const String routename = "/user";
@@ -24,7 +28,16 @@ class UserPage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () => {},
+              onPressed: () => {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        duration: Duration(milliseconds: 350),
+                        child: calendarPage(),
+                      ),
+                    )
+                  },
               icon: Icon(
                 Icons.calendar_today,
                 color: Colors.amber,
@@ -42,24 +55,7 @@ class UserPage extends StatelessWidget {
               Center(
                 child: Stack(
                   children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4, color: Colors.amber.withOpacity(0.6)),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 1,
-                                blurRadius: 5,
-                                color: Colors.amber.withOpacity(0.2))
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  "https://images.pexels.com/photos/2701660/pexels-photo-2701660.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))),
-                    ),
+                    ProfilePic(),
                     Positioned(
                         bottom: 0,
                         right: 0,
@@ -90,7 +86,16 @@ class UserPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                      onPressed: () => {},
+                      onPressed: () => {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.topToBottom,
+                                duration: Duration(milliseconds: 350),
+                                child: UserProfile(),
+                              ),
+                            )
+                          },
                       child: Text(
                         "Save",
                         style: TextStyle(fontSize: 15, color: Colors.white),
@@ -101,7 +106,16 @@ class UserPage extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)))),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          duration: Duration(milliseconds: 350),
+                          child: UserProfile(),
+                        ),
+                      );
+                    },
                     child: Text(
                       "Cancel",
                       style: TextStyle(fontSize: 15, color: Colors.amber),

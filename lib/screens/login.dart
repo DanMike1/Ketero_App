@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ketero_app/bloc/auth_bloc.dart';
 import 'package:ketero_app/bloc/bloc-event.dart';
 import 'package:ketero_app/bloc/bloc_state.dart';
+import 'package:ketero_app/screens/user_page.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routename = '/login';
@@ -15,7 +16,7 @@ class LoginScreen extends StatelessWidget {
     final inputStyle = InputDecoration(border: OutlineInputBorder());
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.only(left: 20, right: 20),
         child: Form(
           key: formKey,
           child: Column(
@@ -26,9 +27,9 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Have A",
+                        "Have a",
                         style: TextStyle(
-                          fontSize: 50,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -94,9 +95,14 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 45,
+                height: 25,
               ),
-              BlocBuilder<AuthBloc, AuthState>(
+              BlocConsumer<AuthBloc, AuthState>(
+                listener: (ctx, authState) {
+                  if (authState is LoggedIn) {
+                    Navigator.of(context).pushNamed(UserPage.routename);
+                  }
+                },
                 builder: (context, state) {
                   print(state);
                   Widget buttonText = Text("LOGIN");
