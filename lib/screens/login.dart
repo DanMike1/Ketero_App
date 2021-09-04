@@ -63,6 +63,7 @@ class LoginScreen extends StatelessWidget {
                   onTap: () {
                     // run validations.
                     // form access.
+                    Navigator.pushNamed(context, '/home');
                     final valid = formKey.currentState!.validate();
                     if (!valid) {
                       // do something here.

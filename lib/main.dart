@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ketero_app/screens/homepage.dart';
 
 import 'screens/login.dart';
 
@@ -11,10 +12,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginScreen.routeName,
+      initialRoute: '/',
       routes: {
-        LoginScreen.routeName: (BuildContext context) => LoginScreen(),
-      },
+        '/': (context) => LoginScreen(),
+          '/home': (context) => MyHomePage(),
+          // '/location': (context) => ChooseLocation(),
+        },
+    
     );
   }
 }
