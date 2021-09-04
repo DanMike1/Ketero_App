@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ketero_app/screens/calendar.dart';
 import 'package:ketero_app/screens/user_page.dart';
 import 'package:page_transition/page_transition.dart';
 import '../widget/profile_pic.dart';
@@ -125,7 +124,7 @@ class UserProfile extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 25,
+                            width: 95,
                           ),
                           Container(
                             child: Column(

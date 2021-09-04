@@ -54,7 +54,7 @@ class _navBarState extends State<navBar> {
             style: TextStyle(color: Colors.amber),
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.brown,
         leading: IconButton(
           onPressed: () => {},
           icon: Icon(
@@ -82,6 +82,7 @@ class _navBarState extends State<navBar> {
       ),
       body: _pages![_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.brown,
         currentIndex: _selectedPageIndex,
         onTap: _selectPage,
         items: [
