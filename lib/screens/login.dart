@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ketero_app/bloc/auth_bloc.dart';
 import 'package:ketero_app/bloc/bloc-event.dart';
 import 'package:ketero_app/bloc/bloc_state.dart';
+import 'package:ketero_app/screens/homepage.dart';
 import 'package:ketero_app/screens/user_page.dart';
+import 'package:ketero_app/widget/navigation.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routename = '/login';
@@ -100,7 +102,7 @@ class LoginScreen extends StatelessWidget {
               BlocConsumer<AuthBloc, AuthState>(
                 listener: (ctx, authState) {
                   if (authState is LoggedIn) {
-                    Navigator.of(context).pushNamed(UserPage.routename);
+                    Navigator.of(context).pushNamed(navBar.routeName);
                   }
                 },
                 builder: (context, state) {
@@ -139,7 +141,6 @@ class LoginScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(50.0)))),
                       onPressed: () {
                         final authBloc = BlocProvider.of<AuthBloc>(context);
-
                         authBloc.add(LoginEvent(
                             email: emailTextController.text,
                             password: passwordTextController.text));

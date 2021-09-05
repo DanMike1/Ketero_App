@@ -10,12 +10,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is LoginEvent) {
       final email = event.email;
       final password = event.password;
-      print(password);
       if (email == "dan@man.com") {
+        print('email');
         if (password == "1234") {
           yield LoggedIn();
           await Future.delayed(Duration(seconds: 2));
-          yield LoggedOut();
         } else {
           yield LogInError(errMsg: "Not Valid");
           await Future.delayed(Duration(seconds: 2));
