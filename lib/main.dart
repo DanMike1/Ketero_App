@@ -8,6 +8,7 @@ import 'package:ketero_app/screens/user_page.dart';
 
 import 'package:ketero_app/screens/login.dart';
 import 'package:ketero_app/screens/user_profile.dart';
+import 'package:ketero_app/widget/addevent.dart';
 import 'package:ketero_app/widget/navigation.dart';
 
 void main() {
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
           '/homepage': (context) => MyHomePage(),
           '/newAppoint': (context) => newAppoint(),
           '/splash': (context) => splashScreen(),
+          '/addEvent': (context) => AddEvent(),
+          
         },
         theme: ThemeData(
           primarySwatch: Colors.amber,
