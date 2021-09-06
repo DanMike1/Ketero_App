@@ -35,7 +35,7 @@ class UserPage extends StatelessWidget {
                       PageTransition(
                         type: PageTransitionType.rightToLeft,
                         duration: Duration(milliseconds: 350),
-                        child: calendarPage(),
+                        child: CalendarPage(),
                       ),
                     )
                   },

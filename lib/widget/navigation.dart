@@ -70,7 +70,7 @@ class _navBarState extends State<navBar> {
                       PageTransition(
                         type: PageTransitionType.rightToLeft,
                         duration: Duration(milliseconds: 350),
-                        child: calendarPage(),
+                        child: CalendarPage(),
                       ),
                     )
                   },
