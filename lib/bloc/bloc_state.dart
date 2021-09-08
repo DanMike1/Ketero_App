@@ -8,4 +8,22 @@ class LogInError extends AuthState {
   LogInError({required this.errMsg});
 }
 
-class LoggedIn extends AuthState {}
+class LoginLoading extends AuthState {}
+
+class LoggedIn extends AuthState {
+  final String response;
+  LoggedIn({required this.response});
+  @override
+  List<Object> get props => [response];
+
+  @override
+  String toString() => 'Logged In {$response}';
+}
+
+class SignUpError extends AuthState {
+  final String errMsg;
+
+  SignUpError({required this.errMsg});
+}
+
+class SignedUp extends AuthState {}

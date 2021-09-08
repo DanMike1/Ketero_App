@@ -9,13 +9,14 @@ import 'package:ketero_app/widget/navigation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class LoginScreen extends StatelessWidget {
-  static const String routename = '/login';
-  LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  static const String routename = '/signUp';
+  SignUpScreen({Key? key}) : super(key: key);
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   var email;
+  var username;
   var password;
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Have a",
+                        "Join us here at",
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -51,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Qeter",
+                        "Qetero",
                         style: TextStyle(
                           color: Colors.amber,
                           fontSize: 70,
@@ -88,6 +89,22 @@ class LoginScreen extends StatelessWidget {
                     ),
                     hintText: "Email"),
               ),
+              SizedBox(height: 45),
+              TextFormField(
+                onChanged: (value) {
+                  username = value;
+                  // emailTextController = value;
+                },
+                // controller: emailTextController,
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.amber),
+                    ),
+                    hintText: "Username"),
+              ),
               SizedBox(
                 height: 35,
               ),
@@ -112,13 +129,13 @@ class LoginScreen extends StatelessWidget {
               ),
               BlocConsumer<AuthBloc, AuthState>(
                 listener: (ctx, authState) {
-                  if (authState is LoggedIn) {
+                  if (authState is SignedUp) {
                     Navigator.of(context).pushNamed(navBar.routeName);
                   }
                 },
                 builder: (context, state) {
                   print(state);
-                  Widget buttonText = Text("LOGIN");
+                  Widget buttonText = Text("Sign UP");
                   if (state is LoggedIn) {
                     buttonText = Row(children: [
                       SizedBox(
@@ -132,7 +149,7 @@ class LoginScreen extends StatelessWidget {
                         width: 9,
                       ),
                       buttonText =
-                          Text("LOGGING IN", style: TextStyle(fontSize: 15))
+                          Text("Sign Up", style: TextStyle(fontSize: 15))
                     ]);
                   }
                   if (state is LogInError) {
@@ -152,10 +169,15 @@ class LoginScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(50.0)))),
                       onPressed: () {
                         final authBloc = BlocProvider.of<AuthBloc>(context);
-                        authBloc
-                            .add(LoginEvent(email: email, password: password));
-                        // print(email);
-                        // print(password);
+                        authBloc.add(SignUpEvent(
+                            email: email,
+                            password: password,
+                            username: username));
+                        print(email);
+                        print(password);
+                        print(username);
+                        signUp(email, password, username);
+                        Navigator.of(context).pushNamed('/login');
                       },
                       child: FittedBox(child: buttonText));
                 },
@@ -168,8 +190,8 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-login(email, password) async {
-  var url = "http://10.0.2.2:3000/api/users/login";
+signUp(email, password, username) async {
+  var url = "http://10.0.2.2:3000/api/users/register-user";
   final response = await http.post(
     Uri.parse(url),
     headers: <String, String>{
@@ -178,13 +200,20 @@ login(email, password) async {
     body: jsonEncode(<String, String>{
       'email': email,
       'password': password,
+      'username': username,
     }),
   );
-  if (response.statusCode == 200) {
+
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
     print(jsonDecode(response.body));
 
     return (jsonDecode(response.body));
   } else {
-    return Text('404');
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    // throw Exception('Failed to create signUp.');
+    return Text('User Already Exits');
   }
 }
