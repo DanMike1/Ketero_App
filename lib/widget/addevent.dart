@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:ketero_app/screens/calendar.dart';
 
 class AddEvent extends StatefulWidget {
   final DateTime? selectedDate;
@@ -16,7 +17,11 @@ class _AddEventState extends State<AddEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: CloseButton(),
+        leading: CloseButton(
+          onPressed: () {
+            Navigator.of(context).pop(CalendarPage());
+          },
+        ),
         title: Text("Add Event"),
         centerTitle: true,
         actions: [
