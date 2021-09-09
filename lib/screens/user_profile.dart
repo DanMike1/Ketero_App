@@ -1,7 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:ketero_app/screens/login.dart';
 import 'package:ketero_app/screens/user_page.dart';
 import 'package:page_transition/page_transition.dart';
 import '../widget/profile_pic.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfile extends StatelessWidget {
   static const String routename = "/userprofile";
@@ -146,6 +150,16 @@ class UserProfile extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+              FloatingActionButton(
+                onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.remove('token');
+
+                  Navigator.of(context).pushNamed(LoginScreen.routename);
+                },
+                child: Icon(Icons.logout),
               ),
             ],
           ),

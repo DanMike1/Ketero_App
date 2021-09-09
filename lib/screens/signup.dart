@@ -136,7 +136,7 @@ class SignUpScreen extends StatelessWidget {
                 builder: (context, state) {
                   print(state);
                   Widget buttonText = Text("Sign UP");
-                  if (state is LoggedIn) {
+                  if (state is SignedUp) {
                     buttonText = Row(children: [
                       SizedBox(
                         child: CircularProgressIndicator(
@@ -152,7 +152,7 @@ class SignUpScreen extends StatelessWidget {
                           Text("Sign Up", style: TextStyle(fontSize: 15))
                     ]);
                   }
-                  if (state is LogInError) {
+                  if (state is SignUpError) {
                     buttonText = Text(state.errMsg);
                   }
 
@@ -173,11 +173,11 @@ class SignUpScreen extends StatelessWidget {
                             email: email,
                             password: password,
                             username: username));
-                        print(email);
-                        print(password);
-                        print(username);
+                        // print(email);
+                        // print(password);
+                        // print(username);
                         signUp(email, password, username);
-                        Navigator.of(context).pushNamed('/login');
+                        Navigator.of(context).pushNamed('/navBar');
                       },
                       child: FittedBox(child: buttonText));
                 },

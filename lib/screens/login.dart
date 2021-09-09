@@ -3,11 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ketero_app/bloc/auth_bloc.dart';
 import 'package:ketero_app/bloc/bloc-event.dart';
 import 'package:ketero_app/bloc/bloc_state.dart';
+import 'package:ketero_app/model/global.dart';
 import 'package:ketero_app/screens/homepage.dart';
+import 'package:ketero_app/screens/signup.dart';
 import 'package:ketero_app/screens/user_page.dart';
 import 'package:ketero_app/widget/navigation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:page_transition/page_transition.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routename = '/login';
@@ -17,16 +22,27 @@ class LoginScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   var email;
   var password;
+
   @override
   Widget build(BuildContext context) {
+    checkLogin() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      if (prefs.getString('token') != null) {
+        Navigator.of(context).pushNamed("/navBar");
+      }
+    }
+
+    checkLogin();
+
     final inputStyle = InputDecoration(border: OutlineInputBorder());
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20),
+        padding: EdgeInsets.only(left: 20, right: 20, top: 40),
         child: Form(
           key: formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Column(
                 children: [
@@ -54,19 +70,19 @@ class LoginScreen extends StatelessWidget {
                         "Qeter",
                         style: TextStyle(
                           color: Colors.amber,
-                          fontSize: 70,
+                          fontSize: 60,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Icon(
                         Icons.access_time,
-                        size: 60,
+                        size: 50,
                         color: Colors.amber,
                       ),
                       Text(
                         "?",
                         style: TextStyle(
-                            fontSize: 70, fontWeight: FontWeight.bold),
+                            fontSize: 60, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -108,13 +124,11 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 25,
+                height: 35,
               ),
               BlocConsumer<AuthBloc, AuthState>(
-                listener: (ctx, authState) {
-                  if (authState is LoggedIn) {
-                    Navigator.of(context).pushNamed(navBar.routeName);
-                  }
+                listener: (ctx, authState) async {
+                  Navigator.of(context).pushNamed('/login');
                 },
                 builder: (context, state) {
                   print(state);
@@ -159,6 +173,25 @@ class LoginScreen extends StatelessWidget {
                       },
                       child: FittedBox(child: buttonText));
                 },
+              ),
+              Container(
+                width: 200,
+                height: 30,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          duration: Duration(milliseconds: 350),
+                          child: SignUpScreen(),
+                        ));
+                  },
+                ),
+              ),
+              Text(
+                'SignUp',
+                style: TextStyle(color: greenColor),
               )
             ],
           ),
@@ -168,23 +201,23 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-login(email, password) async {
-  var url = "http://10.0.2.2:3000/api/users/login";
-  final response = await http.post(
-    Uri.parse(url),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'email': email,
-      'password': password,
-    }),
-  );
-  if (response.statusCode == 200) {
-    print(jsonDecode(response.body));
+// login(email, password) async {
+//   var url = "http://10.0.2.2:3000/api/users/login";
+//   final response = await http.post(
+//     Uri.parse(url),
+//     headers: <String, String>{
+//       'Content-Type': 'application/json; charset=UTF-8',
+//     },
+//     body: jsonEncode(<String, String>{
+//       'email': email,
+//       'password': password,
+//     }),
+//   );
+//   if (response.statusCode == 200) {
+//     print(jsonDecode(response.body));
 
-    return (jsonDecode(response.body));
-  } else {
-    return Text('404');
-  }
-}
+//     return (jsonDecode(response.body));
+//   } else {
+//     return Text('404');
+//   }
+// }

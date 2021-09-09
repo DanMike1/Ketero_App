@@ -26,4 +26,12 @@ class SignUpError extends AuthState {
   SignUpError({required this.errMsg});
 }
 
-class SignedUp extends AuthState {}
+class SignedUp extends AuthState {
+  final String response;
+  SignedUp({required this.response});
+  @override
+  List<Object> get props => [response];
+
+  @override
+  String toString() => 'Signed In {$response}';
+}

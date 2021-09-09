@@ -1,8 +1,9 @@
 import 'dart:convert';
 // import 'dart:html';
 import 'dart:io';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_form_builder/l10n/messages_de.dart';
 import 'package:ketero_app/bloc/bloc-event.dart';
 import 'package:ketero_app/bloc/bloc_state.dart';
@@ -17,7 +18,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (event is LoginEvent) {
       // final email = event.email;
       // final password = event.password;
-      yield LoginLoading();
       var response = await login(event.email, event.password);
       try {
         print(event.email);
@@ -31,7 +31,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } catch (error) {
         print(error);
         yield LogInError(errMsg: "Invalid Credentials!");
+        await Future.delayed(Duration(seconds: 2));
+        yield LoggedOut();
       }
+      yield LoginLoading();
     }
     // if (email == "dan@man.com") {
     //   print('email');
@@ -69,3 +72,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 //     return {"status": "farta", "message": "Wrong URL or sth"};
 //   }
 // }
+login(email, password) async {
+  var url = "http://10.0.2.2:3000/api/users/login";
+  final response = await http.post(
+    Uri.parse(url),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'password': password,
+    }),
+  );
+  if (response.statusCode == 200) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var parse = jsonDecode(response.body);
+    // print(parse["token"]);
+    await prefs.setString('token', parse['token']);
+    String token = prefs.getString('token').toString();
+    // print(token);
+    // print();
+    return parse;
+  } else {
+    return Text('404');
+  }
+}
+
+
+
+    // checkLogin()
