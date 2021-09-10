@@ -23,3 +23,19 @@ class SignUpEvent extends AuthEvent {
     required this.username,
   });
 }
+
+class AddEvents extends AuthEvent {
+  final String title;
+  final String description;
+  final DateTime targeted_date;
+
+  AddEvents(
+      {required this.title,
+      required this.description,
+      required this.targeted_date});
+  @override
+  List<Object> get props => [title, description, targeted_date];
+  @override
+  String toString() =>
+      'LoginButtonPressed {title: $title , targeted_date:$targeted_date, description:$description}';
+}

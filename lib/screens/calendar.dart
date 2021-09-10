@@ -139,20 +139,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       itemCount: vals.length,
                       itemBuilder: (itemBuilder, index) {
                         print(vals);
-                        // AppEvent event = value[index];
-                        // if (value) {
-                        //   return ListTile(
-                        //     leading: CloseButton(),
-                        //     title: Text(event.title),
-                        //   );
-                        // }
-                        // return ListTile(
-                        //   leading: CloseButton(),
-                        //   title: Text(vals[index]["title"]),
-                        // );
-                        if (vals == null) {
-                          return Text("Event");
-                        }
+
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -224,7 +211,11 @@ class _CalendarPageState extends State<CalendarPage> {
           )
               .then((value) {
             setState(() {
-              vals.add(value);
+              if (value != null) {
+                // fetchEvent("sina", 'description', "2021,09,02");
+
+                vals.add(value);
+              }
             });
             // final decode = jsonDecode(value);
             print('============value');

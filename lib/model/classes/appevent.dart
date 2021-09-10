@@ -2,40 +2,40 @@ import 'dart:convert';
 
 class AppEvent {
   final String title;
-  final String id;
+  final String? id;
   final String description;
-  final DateTime date;
-  final String userId;
-  final bool completed;
-  final bool reminder;
+  final DateTime target_date;
+  final String? userId;
+  final bool? completed;
+  final bool? reminder;
 
-  AppEvent(
-    this.title,
+  AppEvent({
+    required this.title,
     this.id,
-    this.description,
-    this.date,
+    required this.description,
+    required this.target_date,
     this.userId,
     this.completed,
     this.reminder,
-  );
+  });
 
   AppEvent copyWith({
     String? title,
     String? id,
     String? description,
-    DateTime? date,
+    DateTime? target_date,
     String? userId,
     bool? completed,
     bool? reminder,
   }) {
     return AppEvent(
-      title ?? this.title,
-      id ?? this.id,
-      description ?? this.description,
-      date ?? this.date,
-      userId ?? this.userId,
-      completed ?? this.completed,
-      reminder ?? this.reminder,
+      title: title ?? this.title,
+      id: id ?? this.id,
+      description: description ?? this.description,
+      target_date: target_date ?? this.target_date,
+      userId: userId ?? this.userId,
+      completed: completed ?? this.completed,
+      reminder: reminder ?? this.reminder,
     );
   }
 
@@ -44,7 +44,7 @@ class AppEvent {
       'title': title,
       'id': id,
       'description': description,
-      'date': date.millisecondsSinceEpoch,
+      'target_date': target_date.millisecondsSinceEpoch,
       'userId': userId,
       'completed': completed,
       'reminder': reminder,
@@ -53,24 +53,31 @@ class AppEvent {
 
   factory AppEvent.fromMap(Map<String, dynamic> map) {
     return AppEvent(
-      map['title'],
-      map['id'],
-      map['description'],
-      DateTime.fromMillisecondsSinceEpoch(map['date']),
-      map['userId'],
-      map['completed'],
-      map['reminder'],
+      title: map['title'],
+      id: map['id'],
+      description: map['description'],
+      target_date: DateTime.fromMillisecondsSinceEpoch(map['target_date']),
+      userId: map['userId'],
+      completed: map['completed'],
+      reminder: map['reminder'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory AppEvent.fromJson(String source) =>
-      AppEvent.fromMap(json.decode(source));
+  factory AppEvent.fromJson(Map<String, dynamic> json) {
+    return AppEvent(
+        title: json['title'],
+        description: json['description'],
+        target_date: DateTime.parse(json['target_date']));
+  }
+
+  // factory AppEvent.fromJson(String source) =>
+  //     AppEvent.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'AppEvent(title: $title, id: $id, description: $description, date: $date, userId: $userId, completed: $completed, reminder: $reminder)';
+    return 'AppEvent(title: $title, id: $id, description: $description, target_date: $target_date, userId: $userId, completed: $completed, reminder: $reminder)';
   }
 
   @override
@@ -81,7 +88,7 @@ class AppEvent {
         other.title == title &&
         other.id == id &&
         other.description == description &&
-        other.date == date &&
+        other.target_date == target_date &&
         other.userId == userId &&
         other.completed == completed &&
         other.reminder == reminder;
@@ -92,7 +99,7 @@ class AppEvent {
     return title.hashCode ^
         id.hashCode ^
         description.hashCode ^
-        date.hashCode ^
+        target_date.hashCode ^
         userId.hashCode ^
         completed.hashCode ^
         reminder.hashCode;

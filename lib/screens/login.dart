@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ketero_app/bloc/auth_bloc.dart';
 import 'package:ketero_app/bloc/bloc-event.dart';
 import 'package:ketero_app/bloc/bloc_state.dart';
+import 'package:ketero_app/model/classes/user.dart';
 import 'package:ketero_app/screens/signup.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,9 +16,9 @@ class LoginScreen extends StatelessWidget {
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  var email;
-  var password;
-
+  // var email;
+  // var password;
+  User user = User(email: "", password: "");
   @override
   Widget build(BuildContext context) {
     checkLogin() async {
@@ -88,7 +89,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 45),
                   TextFormField(
                     onChanged: (value) {
-                      email = value;
+                      user.email = value;
                       // emailTextController = value;
                     },
                     controller: emailTextController,
@@ -106,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextFormField(
                     onChanged: (value) {
-                      password = value;
+                      user.password = value;
                     },
                     obscureText: true,
                     controller: passwordTextController,
@@ -168,8 +169,8 @@ class LoginScreen extends StatelessWidget {
                                           BorderRadius.circular(50.0)))),
                           onPressed: () {
                             final authBloc = BlocProvider.of<AuthBloc>(context);
-                            authBloc.add(
-                                LoginEvent(email: email, password: password));
+                            authBloc.add(LoginEvent(
+                                email: user.email, password: user.password));
                             // print(email);
                             // print(password);
                           },
