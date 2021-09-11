@@ -13,6 +13,9 @@ import 'package:ketero_app/model/classes/appevent.dart';
 
 import 'package:ketero_app/screens/calendar.dart';
 import 'package:http/http.dart' as http;
+import 'package:ketero_app/screens/homepage.dart';
+import 'package:ketero_app/widget/navigation.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class navAddEvents extends StatefulWidget {
@@ -111,7 +114,14 @@ class _navAddEventsState extends State<navAddEvents> {
                       //     Map<String, dynamic>.from(_formKey.currentState!.value);
                       // this where the new event will be stored in  database;
                       // postTask(, description, targeted_date)
-                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          duration: Duration(milliseconds: 350),
+                          child: navBar(),
+                        ),
+                      );
                       // print(data);
                     }
                   },
