@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ketero_app/bloc/auth_bloc.dart';
-import 'package:ketero_app/screens/appointments.dart';
 import 'package:ketero_app/screens/homepage.dart';
 import 'package:ketero_app/screens/signup.dart';
 import 'package:ketero_app/screens/splashScreen.dart';
@@ -31,7 +30,6 @@ class MyApp extends StatelessWidget {
           '/login': (context) => LoginScreen(),
           '/signUp': (context) => SignUpScreen(),
           '/homepage': (context) => MyHomePage(),
-          '/newAppoint': (context) => newAppoint(),
           '/splash': (context) => splashScreen(),
           '/addEvent': (context) => AddEvent(),
         },

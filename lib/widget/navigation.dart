@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ketero_app/screens/calendar.dart';
 import 'package:ketero_app/screens/homepage.dart';
-import 'package:ketero_app/screens/newAppoint.dart';
 import 'package:ketero_app/screens/user_profile.dart';
+import 'package:ketero_app/widget/newAddEvent.dart';
 import 'package:page_transition/page_transition.dart';
 
 // ignore: camel_case_types
@@ -27,7 +27,7 @@ class _navBarState extends State<navBar> {
         'title': 'Home',
       },
       {
-        'page': newAppoint(),
+        'page': navAddEvents(),
         'title': 'New Appointment',
       },
       {
@@ -55,13 +55,7 @@ class _navBarState extends State<navBar> {
           ),
         ),
         backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () => {},
-          icon: Icon(
-            Icons.arrow_back_outlined,
-            color: Colors.amber,
-          ),
-        ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               onPressed: () => {

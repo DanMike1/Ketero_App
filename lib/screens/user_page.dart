@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -42,13 +41,6 @@ class _UserPageState extends State<UserPage> {
           ),
         ),
         backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () => {},
-          icon: Icon(
-            Icons.arrow_back_outlined,
-            color: Colors.amber,
-          ),
-        ),
         actions: [
           IconButton(
               onPressed: () => {
@@ -79,23 +71,6 @@ class _UserPageState extends State<UserPage> {
                 child: Stack(
                   children: [
                     ProfilePic(),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  width: 4,
-                                  color: Colors.amber.withOpacity(0.6)),
-                              color: Colors.amber),
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                        )),
                   ],
                 ),
               ),
@@ -108,14 +83,28 @@ class _UserPageState extends State<UserPage> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(snapshot.data!.username.toString()),
+                            Container(
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                  snapshot.data!.username.toString(),
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                )),
                             TextField(
                               controller: usernameController,
                               decoration: const InputDecoration(
                                 hintText: 'Username',
                               ),
                             ),
-                            Text(snapshot.data!.email),
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              child: Text(
+                                snapshot.data!.email.toString(),
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ),
                             TextField(
                               controller: emailController,
                               decoration: const InputDecoration(
@@ -367,14 +356,14 @@ Future<User> getCurrentUser() async {
 }
 
 Future<User> changePassword(String newPassword) async {
-    var url = "http://10.0.2.2:3000/api/users/update";
+  var url = "http://10.0.2.2:3000/api/users/update";
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token')!;
   print(token);
   final response = await http.put(
     Uri.parse(url),
     // headers: {
-    
+
     //   HttpHeaders.authorizationHeader: token,
     // },
     headers: {
@@ -385,7 +374,6 @@ Future<User> changePassword(String newPassword) async {
       // 'password': newpassword,
       // // 'password': password,
       // 'email': email
-      
     }),
   );
   final responseJson = jsonDecode(response.body);
@@ -399,6 +387,4 @@ Future<User> changePassword(String newPassword) async {
     // then throw an exception.
     throw Exception('Failed to update user.');
   }
-
-    
-  }
+}
