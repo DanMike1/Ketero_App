@@ -51,7 +51,14 @@ class User {
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source));
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+        username: json['username'],
+        email: json['email'],
+        password: json['password']
+        // target_date: DateTime.parse(json['target_date']));
+        );
+  }
 
   @override
   String toString() {

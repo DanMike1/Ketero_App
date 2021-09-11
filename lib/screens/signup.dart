@@ -248,8 +248,8 @@ class SignUpScreen extends StatelessWidget {
                             // print(email);
                             // print(password);
                             // print(username);
-                            signUp(email, password, username);
-                            Navigator.of(context).pushNamed('/navBar');
+                            signUp(email, password, username, firstname,lastname);
+                            Navigator.of(context).pushNamed('/login');
                           },
                           child: FittedBox(child: buttonText));
                     },
@@ -286,7 +286,7 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
-signUp(email, password, username) async {
+signUp(email, password, username, firstname, lastname) async {
   var url = "http://10.0.2.2:3000/api/users/register-user";
   final response = await http.post(
     Uri.parse(url),

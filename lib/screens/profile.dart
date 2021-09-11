@@ -20,7 +20,7 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  late Future<User> user;
+  late Future<List<User>> user;
   @override
   void initState() {
     super.initState();
@@ -160,22 +160,17 @@ class _UserProfileState extends State<UserProfile> {
                                 ),
                                 Divider(),
                                 Container(
-                                  height: 120,
-                                  width: 300,
-                                  color: Colors.amber,
-                                  child: FutureBuilder<User>(
+                                  child: FutureBuilder<List<User>>(
                                       future: user,
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
-                                          return Text(snapshot.data!.username
-                                              .toString());
-                                          // return Column(
-                                          //   children: [
-                                          //     ...snapshot.data!.map((e) {
-                                          //       return Text(e.username!);
-                                          //     }).toList()
-                                          //   ],
-                                          // );
+                                          return Column(
+                                            children: [
+                                              ...snapshot.data!.map((e) {
+                                                return Text(e.username!);
+                                              }).toList()
+                                            ],
+                                          );
                                         } else if (snapshot.hasError) {
                                           return Text('${snapshot.error}');
                                         }
@@ -209,26 +204,25 @@ class _UserProfileState extends State<UserProfile> {
   }
 }
 
-Future<User> getCurrentUser() async {
+Future<List<User>> getCurrentUser() async {
   var url = "http://10.0.2.2:3000/api/users/current";
   // var parse = jsonDecode(response.body);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  // String token = prefs.getString('token')!;
   final response = await http.get(
     Uri.parse(url),
     // Send authorization headers to the backend.
-    headers: {
-      HttpHeaders.authorizationHeader: token,
-    },
+    // headers: {
+    //   HttpHeaders.authorizationHeader: token,
+    // },
   );
   final responseJson = jsonDecode(response.body);
   if (response.statusCode == 200) {
-    // List<User> results = [];
+    List<User> results = [];
     print(responseJson[0]);
-    // responseJson.forEach((val) => {results.add(User.fromJson(val))});
-    // return results;
-    return User.fromJson(jsonDecode(response.body));
-    // return responseJson;
+    responseJson.forEach((val) => {results.add(User.fromJson(val))});
+    return results;
+    // return User.fromJson(jsonDecode(response.body));
   } else {
     throw Exception("Failed to load AppEvent");
   }

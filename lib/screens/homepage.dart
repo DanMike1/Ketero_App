@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -24,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    allEvents = postTask();
+    allEvents = getFetchedEvent();
   }
 
   @override
@@ -143,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 //! GET ALL TASKs
-Future<List<AppEvent>> postTask() async {
+Future<List<AppEvent>> getFetchedEvent() async {
   var url = "http://10.0.2.2:3000/api/tasks";
   // var parse = jsonDecode(response.body);
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -157,8 +156,11 @@ Future<List<AppEvent>> postTask() async {
   );
   final responseJson = jsonDecode(response.body);
   if (response.statusCode == 200) {
+    if (responseJson == null) {
+       throw Exception("no task inputted yet");
+    }
     List<AppEvent> results = [];
-    print(responseJson[0]);
+    // print(responseJson[0]);
     responseJson.forEach((val) => {results.add(AppEvent.fromJson(val))});
     return results;
   } else {
