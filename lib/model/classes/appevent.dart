@@ -64,9 +64,10 @@ class AppEvent {
   }
 
   String toJson() => json.encode(toMap());
-
+  
   factory AppEvent.fromJson(Map<String, dynamic> json) {
     return AppEvent(
+      id: json['_id'],
         title: json['title'],
         description: json['description'],
         target_date: DateTime.parse(json['target_date']));

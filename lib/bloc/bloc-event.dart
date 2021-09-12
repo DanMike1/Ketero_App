@@ -24,6 +24,17 @@ class SignUpEvent extends AuthEvent {
   });
 }
 
+class UpdateUser extends AuthEvent{
+  final String email;
+  final String password;
+  final String username;
+
+  UpdateUser({
+    required this.email,
+    required this.password,
+    required this.username,
+  });
+}
 class AddEvents extends AuthEvent {
   final String title;
   final String description;

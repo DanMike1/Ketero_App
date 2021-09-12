@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ketero_app/bloc/bloc-event.dart';
+import '../model/classes/appevent.dart';
 import 'package:ketero_app/model/classes/appevent.dart';
 import 'package:ketero_app/widget/addevent.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +20,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late Future<List<AppEvent>> allEvents;
+  late Future<AppEvent> deleteTasks;
   @override
   @override
   void initState() {
@@ -38,7 +40,24 @@ class _MyHomePageState extends State<MyHomePage> {
                   return Column(
                     children: [
                       ...snapshot.data!.map((e) {
-                        return Text(e.title);
+                        return Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  // Navigator.of(context).pushNamed("/addEvent");
+                                },
+                                icon: Icon(Icons.edit)),
+                            Text(e.title),
+                            Divider(),
+                            Text(e.id.toString()),
+                            Text(e.description),
+                            IconButton(
+                                onPressed: () {
+                                  deleteTasks = deleteTask(e.id.toString());
+                                },
+                                icon: Icon(Icons.delete))
+                          ],
+                        );
                       }).toList()
                     ],
                   );
@@ -143,10 +162,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
 //! GET ALL TASKs
 Future<List<AppEvent>> getFetchedEvent() async {
-  var url = "http://10.0.2.2:3000/api/tasks";
+  var url = "http://10.0.2.2:3000/api/tasks/";
   // var parse = jsonDecode(response.body);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token')!;
+  print(token);
   final response = await http.get(
     Uri.parse(url),
     // Send authorization headers to the backend.
@@ -157,7 +177,7 @@ Future<List<AppEvent>> getFetchedEvent() async {
   final responseJson = jsonDecode(response.body);
   if (response.statusCode == 200) {
     if (responseJson == null) {
-       throw Exception("no task inputted yet");
+      throw Exception("no task inputted yet");
     }
     List<AppEvent> results = [];
     // print(responseJson[0]);
@@ -170,3 +190,70 @@ Future<List<AppEvent>> getFetchedEvent() async {
 
 // {'a':[]}
 
+Future<AppEvent> deleteTask(String id) async {
+  var url = "http://10.0.2.2:3000/api/tasks/:taskId";
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  String token = prefs.getString('token')!;
+  // print(id);
+  final response = await http.delete(
+    Uri.parse(url),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      HttpHeaders.authorizationHeader: token,
+    },
+    body: jsonEncode(<String, String>{
+      "id": id,
+    }),
+  );
+  final responseJson = jsonDecode(response.body);
+  if (response.statusCode == 200) {
+    // List<AppEvent> results = [];
+    // If the server did return a 200 OK response,
+    // then parse the JSON. After deleting,
+    // you'll get an empty JSON `{}` response.
+    // Don't return `null`, otherwise `snapshot.hasData`
+    // will always return false on `FutureBuilder`.
+    // responseJson.forEach((val) => {results.add(AppEvent.fromJson(val))});
+    // return results;
+    return AppEvent.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a "200 OK response",
+    // then throw an exception.
+    throw Exception('Failed to delete task.');
+  }
+}
+
+Future<AppEvent> updatingUser(
+    String title, String description, DateTime target_date) async {
+  var url = "http://10.0.2.2:3000/api/tasks/:taskId";
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token')!;
+  print(token);
+  final response = await http.put(
+    Uri.parse(url),
+    // headers: {
+    //   HttpHeaders.authorizationHeader: token,
+    // },
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      HttpHeaders.authorizationHeader: token,
+    },
+    body: jsonEncode(<String, String>{
+      'title': title,
+      'description': description,
+      'target_date': target_date.toString()
+    }),
+  );
+  final responseJson = jsonDecode(response.body);
+  print(responseJson);
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return AppEvent.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to update user.');
+  }
+}

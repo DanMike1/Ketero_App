@@ -54,8 +54,8 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
         username: json['username'],
-        email: json['email'],
-        password: json['password']
+        email: json['email'].toString(),
+        password: json['password'].toString()
         // target_date: DateTime.parse(json['target_date']));
         );
   }
